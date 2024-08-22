@@ -94,14 +94,23 @@ function love.draw()
 
     -- love.graphics.printf("Hello Pong!", 0, 20, VIRTUAL_WIDTH, "center")
 
-    -- love.graphics.setFont(scoreFont)
-    -- love.graphics.print(tostring(player1Score), VIRTUAL_WIDTH / 2 - 50, VIRTUAL_HEIGHT / 3)
-    -- love.graphics.print(tostring(player2Score), VIRTUAL_WIDTH / 2 + 30, VIRTUAL_HEIGHT / 3)
+    love.graphics.setFont(scoreFont)
+    love.graphics.print(tostring(player1Score), VIRTUAL_WIDTH / 2 - 50, VIRTUAL_HEIGHT / 3)
+    love.graphics.print(tostring(player2Score), VIRTUAL_WIDTH / 2 + 30, VIRTUAL_HEIGHT / 3)
 
     -- render game objects
     player1:render()
     player2:render()
     ball:render()
 
+    displayFPS()
+
     push:apply('end')
+end
+
+function displayFPS()
+    love.graphics.setFont(smallFont)
+    love.graphics.setColor(0, 1, 0, 1)
+    love.graphics.print('FPS: ' .. tostring(love.timer.getFPS()), 10, 10)
+    love.graphics.print('dt: ' .. tostring(1 / love.timer.getFPS()), 10, 20)
 end
