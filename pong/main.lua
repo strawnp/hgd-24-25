@@ -77,6 +77,21 @@ function love.update(dt)
         end
     end
 
+    -- handle scoring (hitting either side)
+    if ball.x < 0 then 
+        servingPlayer = 1
+        player2Score = player2Score + 1
+        ball:reset()
+        gameState = 'start'
+    end
+
+    if ball.x > VIRTUAL_WIDTH - 4 then 
+        servingPlayer = 2
+        player1Score = player1Score + 1
+        ball:reset()
+        gameState = 'start'
+    end
+
     -- player 1 movement
     if love.keyboard.isDown('w') then 
         player1.dy = -PADDLE_SPEED
@@ -125,11 +140,11 @@ function love.draw()
 
     love.graphics.setFont(smallFont)
 
-    if gameState == 'start' then 
-        love.graphics.printf('Hello Start State!', 0, 20, VIRTUAL_WIDTH, 'center')
-    else 
-        love.graphics.printf('Hello Play State!', 0, 20, VIRTUAL_WIDTH, 'center')
-    end
+    -- if gameState == 'start' then 
+    --     love.graphics.printf('Hello Start State!', 0, 20, VIRTUAL_WIDTH, 'center')
+    -- else 
+    --     love.graphics.printf('Hello Play State!', 0, 20, VIRTUAL_WIDTH, 'center')
+    -- end
 
     -- love.graphics.printf("Hello Pong!", 0, 20, VIRTUAL_WIDTH, "center")
 
@@ -151,5 +166,5 @@ function displayFPS()
     love.graphics.setFont(smallFont)
     love.graphics.setColor(0, 1, 0, 1)
     love.graphics.print('FPS: ' .. tostring(love.timer.getFPS()), 10, 10)
-    love.graphics.print('dt: ' .. tostring(1 / love.timer.getFPS()), 10, 20)
+    -- love.graphics.print('dt: ' .. tostring(1 / love.timer.getFPS()), 10, 20)
 end
