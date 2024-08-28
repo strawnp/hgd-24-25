@@ -21,10 +21,19 @@ function love.load()
 
     math.randomseed(os.time())
 
+    -- create game fonts
     smallFont = love.graphics.newFont('font.ttf', 8)
     largeFont = love.graphics.newFont('font.ttf', 16)
     scoreFont = love.graphics.newFont('font.ttf', 32)
     love.graphics.setFont(smallFont)
+
+    -- load sound effects
+    sounds = {
+        ['paddle_hit'] = love.audio.newSource('sounds/paddle_hit.wav', 'static'),
+        ['wall_hit'] = love.audio.newSource('sounds/wall_hit.wav', 'static'),
+        ['score'] = love.audio.newSource('sounds/score.wav', 'static'),
+        ['victory'] = love.audio.newSource('sounds/victory.wav', 'static')
+    }
 
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
         fullscreen = false,
@@ -66,6 +75,8 @@ function love.update(dt)
             else 
                 ball.dy = math.random(10, 150)
             end
+
+            sounds['paddle_hit']:play()
         end
         if ball:collides(player2) then 
             ball.dx = -ball.dx * 1.03
@@ -76,16 +87,22 @@ function love.update(dt)
             else 
                 ball.dy = math.random(10, 150)
             end
+
+            sounds['paddle_hit']:play()
         end
 
         if ball.y <= 0 then 
             ball.y = 0 
             ball.dy = -ball.dy 
+
+            sounds['wall_hit']:play()
         end
 
         if ball.y >= VIRTUAL_HEIGHT - 4 then 
             ball.y = VIRTUAL_HEIGHT - 4 
             ball.dy = -ball.dy 
+
+            sounds['wall_hit']:play()
         end
 
         -- handle scoring (hitting either side)
@@ -96,9 +113,11 @@ function love.update(dt)
             if player2Score == VICTORY_SCORE then 
                 winningPlayer = 2
                 gameState = 'done'
+                sounds['victory']:play()
             else 
                 gameState = 'serve'
                 ball:reset() 
+                sounds['score']:play()
             end
         end
 
@@ -109,9 +128,11 @@ function love.update(dt)
             if player1Score == VICTORY_SCORE then 
                 winningPlayer = 1
                 gameState = 'done'
+                sounds['victory']:play()
             else 
                 gameState = 'serve'
                 ball:reset() 
+                sounds['score']:play()
             end
         end
     end
