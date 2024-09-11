@@ -3,7 +3,7 @@ PipePair = Class{}
 local GAP_HEIGHT = 90
 
 function PipePair:init(y)
-    self.x = VIRTUAL_HEIGHT + 32
+    self.x = VIRTUAL_WIDTH + 32
     self.y = y
 
     self.pipes = {
