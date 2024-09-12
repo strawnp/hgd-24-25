@@ -8,7 +8,7 @@ PIPE_HEIGHT = 288
 PIPE_WIDTH = 70
 
 function Pipe:init(orientation, y)
-    -- self.x = VIRTUAL_WIDTH
+    self.x = VIRTUAL_WIDTH
     self.y = y
 
     self.width = PIPE_IMAGE:getWidth()
