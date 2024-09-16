@@ -54,8 +54,9 @@ function love.load()
     }
     gStateMachine:change('title')
 
-    -- create an empty input table
+    -- create empty input tables
     love.keyboard.keysPressed = {}
+    love.mouse.buttonsPressed = {}
 end
 
 function love.resize(w, h)
@@ -78,6 +79,18 @@ function love.keyboard.wasPressed(key)
     end
 end
 
+function love.mousepressed(x, y, button)
+    love.mouse.buttonsPressed[button] = true
+end
+
+function love.mouse.wasPressed(button)
+    if love.mouse.buttonsPressed[button] then 
+        return true 
+    else
+        return false 
+    end
+end
+
 function love.update(dt)
     backgroundScroll = (backgroundScroll + BACKGROUND_SCROLL_SPEED * dt) % BACKGROUND_LOOPING_POINT
 
@@ -87,6 +100,7 @@ function love.update(dt)
 
     -- reset input table
     love.keyboard.keysPressed = {}
+    love.mouse.buttonsPressed = {}
 end
 
 function love.draw()
