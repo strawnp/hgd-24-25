@@ -70,7 +70,7 @@ function Brick:init(x, y)
     -- https://love2d.org/wiki/ParticleSystem
 
     -- lasts between 0.5-1 seconds seconds
-    self.psystem:setParticleLifetime(0.5, 1)
+    self.psystem:setParticleLifetime(0.5, 5)
 
     -- give it an acceleration of anywhere between X1,Y1 and X2,Y2 (0, 0) and (80, 80) here
     -- gives generally downward 
@@ -78,7 +78,7 @@ function Brick:init(x, y)
 
     -- spread of particles; normal looks more natural than uniform, which is clumpy; numbers
     -- are amount of standard deviation away in X and Y axis
-    self.psystem:setEmissionArea('normal', 10, 10)
+    self.psystem:setEmissionArea('normal', 20, 20)
 end
 
 --[[
@@ -99,7 +99,7 @@ function Brick:hit()
         paletteColors[self.color].b / 255,
         0
     )
-    self.psystem:emit(64)
+    self.psystem:emit(128)
 
     -- sound on hit
     gSounds['brick-hit-2']:stop()
